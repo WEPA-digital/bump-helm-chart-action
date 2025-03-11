@@ -16,7 +16,7 @@ inputs:
     required: true
 outputs:
   chart:
-    description: "Chart name"    
+    description: "Chart name"
     value: ${{ steps.chart-name.outputs.chart }}
 runs:
   using: "composite"
@@ -31,11 +31,11 @@ runs:
         if [[ ${{ fromJSON(inputs.app_version) }} ]]
         then
           pybump bump --file ${{ inputs.chart-path }}/Chart.yaml --level ${{ inputs.level }} --app-version
-        fi        
+        fi
         pybump bump --file ${{ inputs.chart-path }}/Chart.yaml --level ${{ inputs.level }}
-      shell: bash        
+      shell: bash
     - name: Output Name
       id: chart-name
       run: |
-        echo "::set-output name=chart::$(basename ${{ inputs.chart-path }})"
+        echo "chart=$(basename ${{ inputs.chart-path }})" >> $GITHUB_OUTPUT
       shell: bash
